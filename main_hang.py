@@ -44,9 +44,15 @@ while game_is_on:
             'Check if the passed letter is correct'
             incorrect_letter = True
             while incorrect_letter:
-                letter = input('Pass letter: ')
+                letter = input('Pass letter: ').lower()
                 if letter.isalpha() and len(letter) == 1:
-                    incorrect_letter = False
+
+                    'Check if letter was passed before'
+                    if player.check_letter(letter):
+                        print('Ooops you tried that letter before, try the different one!')
+                    else:
+                        player.add_letter(letter)
+                        incorrect_letter = False
                 else:
                     print('You can pass only one letter, try one more time!')
 
@@ -95,6 +101,7 @@ while game_is_on:
             elif decision == 'y':
                 print('Ok lets play!')
                 player.reset_chances()
+                player.clear_letters()
                 incorrect_decision = False
             else:
                 print("Pass 'y' for yes or 'n' for no!")
